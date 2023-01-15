@@ -1,7 +1,11 @@
 module.exports.profile = function(req, res){
-    return res.end("<h1>User Profile</h1>");
+    return res.render('userProfile');
 }
 
 module.exports.data = function(req, res){
-    return res.end("<h1>Successfuy got th erequest");
+    return res.end("<h1>Successfully got the request</h1>");
+}
+
+module.exports.signup = function(req, res){
+    return res.render('signUp');
 }
