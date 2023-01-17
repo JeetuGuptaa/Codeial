@@ -16,6 +16,9 @@ const userSchema = mongoose.Schema({
         type : String,
         required : true
     }
+},
+{
+    timestamps : true //this will tell mongoose to create time stamps, of created at and updated at
 });
 
 const User = mongoose.model('User', userSchema);
