@@ -5,10 +5,36 @@
         </title>
     </head>
     <body>
+        <ul>
+            <% if(locals.user){%>
+                <li>
+                    <p><%=user.name%></p>
+                </li>
+                <li>
+                    <a href ="/user/signout">SignOut</a>
+                </li>
+                <% }else{%>
+                    <li>
+                        <a href ="/user/signin">Sign In</a>
+                    </li>
+                    <li>
+                        <a href ="/user/signup">Sign Up</a>
+                    </li>
+                    <% } %>
+        </ul>
         <h1>User Profile</h1>
         <form action="/user/data" method = "post">
             <input type="text" name="name">
             <button>Submit</button>
         </form>
+
+<!-- since passport.setAutherizedUser middle ware has made user available in views we can directly access it -->
+        <p>
+            <%= user.name%>
+        </p>
+        <p>
+            <%= user.email%>
+        </p>
+
     </body>
 </html>

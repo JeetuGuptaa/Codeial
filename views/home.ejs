@@ -5,6 +5,21 @@
         </title>
     </head>
     <body>
+        <ul>
+            <% if(locals.user){%>
+                <li>
+                    <p><%=user.name%></p>
+                    <a href ="/user/signout">SignOut</a>
+                </li>
+                <% }else{%>
+                    <li>
+                        <a href ="/user/signin">Sign In</a>
+                    </li>
+                    <li>
+                        <a href ="/user/signup">Sign Up</a>
+                    </li>
+                    <% } %>
+        </ul>
         <h1>Codeial <%=title%></h1>
     </body>
 </html>

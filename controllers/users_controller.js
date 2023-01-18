@@ -56,5 +56,19 @@ module.exports.signin = function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
-    //TODO
+    return res.redirect('/user/profile');
+}
+
+//signout
+module.exports.signout = function(req, res){
+    req.logout(function(err){
+        if(err){
+            console.log("Error while logging out");
+            return ;
+        }
+        else{
+            res.redirect('/user/signin');
+        }
+    });
+    
 }
