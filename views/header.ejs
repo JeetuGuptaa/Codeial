@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>
+            Codeial
+        </title>
+    </head>
+    <body>
+        <header>
+            <ul>
+                <% if(locals.user){%>
+                    <li>
+                        <p><%=user.name%></p>
+                        <a href ="/user/signout">SignOut</a>
+                    </li>
+                    <% }else{%>
+                        <li>
+                            <a href ="/user/signin">Sign In</a>
+                        </li>
+                        <li>
+                            <a href ="/user/signup">Sign Up</a>
+                        </li>
+                        <% } %>
+            </ul>
+        </header>
+    </body>
+</html>
