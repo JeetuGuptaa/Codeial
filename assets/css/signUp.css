@@ -1,27 +1,27 @@
 body{
 	margin: 0;
 	height: 100vh;
+}
+
+section{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-}
-
-section{
 	height: 45vh;
-	width: 30vw;
-	background: lightgrey;
+	width: 100%;
 }
 
 form{
 	height: 100%;
-	width: 100%;
+	width: 30vw;
 	display: flex;
 	flex-direction: column;
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
+	background: lightgrey;
 }
 
 input{

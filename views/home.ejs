@@ -6,5 +6,31 @@
     </head>
     <body>
         <h1>Codeial <%=title%></h1>
+
+        <section id="posts">
+            <% if(locals.user){ %>
+            <form action ="/post/create" method ="POST">
+                <textarea placeholder="Type Here..." required cols="30" rows="3" name ="content"></textarea>
+                <input type="Submit" value = "Post">
+            </form>
+            <% } %>
+
+            <section id="postContainer">
+                <ul>
+                    <% for(let post of posts){ %>
+                        <p id = 'singlePost'>
+                            <li>
+                                <small>User : <%= post.user.name %></small>
+                                <br>
+                                <%= post.content %>
+                            </li>
+                        </p>
+                    <%}%>
+                </ul>
+                
+            </section>
+
+        </section>
+
     </body>
 </html>
