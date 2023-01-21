@@ -2,7 +2,6 @@ const comment = require('../models/commment');
 const post = require('../models/post');
 
 module.exports.create = function(req, res){
-
     post.findById(req.body.post, function(err, post){
         if(err){
             console.log('Error in fetching post', err);
@@ -26,6 +25,5 @@ module.exports.create = function(req, res){
             return res.redirect('back');
         })
 
-    });
-    
+    });  
 }

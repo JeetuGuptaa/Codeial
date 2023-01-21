@@ -14,9 +14,13 @@
             <% for(let post of posts){ %>
                 <p id = 'singlePost'>
                     <li>
+                        
                         <small>User : <%= post.user.name %></small>
                         <br>
                         <%= post.content %>
+                        <%if(locals.user && user.id == post.user.id){%>
+                            <a href ="/post/destroy/<%=post.id%>">Delete</a>
+                        <%}%>
                         <%if(locals.user){%>
                         <form action="/comment/create" method="POST">
                             <textarea placeholder="Type Here..." required cols="30" rows="3" name ="content"></textarea>
