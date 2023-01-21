@@ -1,18 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>SignIn</title>
-	<link rel="stylesheet" type="text/css" href="/css/signUp.css">
-</head>
-<body>
-	<section>
-		<form action = "/user/create-session" method = "POST">
+
+	<section id = "auth-sec">
+		<form action = "/user/create-session" method = "POST" id ="auth-form">
 			<input type="email" name="email" placeholder ="E-mail" required>
 			<input type="password" name ="password" placeholder= "Password" required>
-			<button type ="submit">Sign In</button>
+			<button type ="submit" id ="auth-btn">Sign In</button>
 		</form>
 	</section>
-</body>
-</html>

@@ -3,7 +3,7 @@ body{
 	height: 100vh;
 }
 
-section{
+#auth-sec{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -13,7 +13,7 @@ section{
 	width: 100%;
 }
 
-form{
+#auth-form{
 	height: 100%;
 	width: 30vw;
 	display: flex;
@@ -24,7 +24,7 @@ form{
 	background: lightgrey;
 }
 
-input{
+#auth-inp{
 	width: 25vw;
 	font-size: 1.3rem;
 	margin-bottom: 10px;
@@ -34,7 +34,7 @@ input{
 	padding:0.2rem;
 }
 
-button{
+#auth-btn{
 	padding: 0.5rem;
 	font-size: 1rem;
 	margin-top: 1rem;

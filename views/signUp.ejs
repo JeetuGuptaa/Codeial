@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>SignUp</title>
-	<link rel="stylesheet" type="text/css" href="/css/signUp.css">
-</head>
-<body>
-	<section>
-		<form action = "/user/create" method = "POST">
-			<input type="email" name="email" placeholder ="E-mail" required>
-			<input type="text" name="name" placeholder ="Enter name" required>
-			<input type="password" name ="password" placeholder= "Password" required>
-			<input type="password" name="confirmPassword" placeholder ="confirm Password" required>
-			<button type ="submit">Sign Up</button>
+
+	<section id ="auth-sec">
+		<form action = "/user/create" method = "POST" id ="auth-form">
+			<input type="email" name="email" placeholder ="E-mail" required id ="auth-inp">
+			<input type="text" name="name" placeholder ="Enter name" required id ="auth-inp">
+			<input type="password" name ="password" placeholder= "Password" required id ="auth-inp">
+			<input type="password" name="confirmPassword" placeholder ="confirm Password" required id ="auth-inp">
+			<button type ="submit" id ="auth-btn">Sign Up</button>
 		</form>
 	</section>
-</body>
-</html>
