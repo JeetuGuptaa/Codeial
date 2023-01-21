@@ -1,15 +1,15 @@
-const comment = require('../models/commment');
-const post = require('../models/post');
+const Comment = require('../models/commment');
+const Post = require('../models/post');
 
 module.exports.create = function(req, res){
-    post.findById(req.body.post, function(err, post){
+    Post.findById(req.body.post, function(err, post){
         if(err){
             console.log('Error in fetching post', err);
             return ;
         }
         if(!post) return res.redirect('back');
 
-        comment.create({
+        Comment.create({
             content : req.body.content,
             user : req.user.id,
             post : req.body.post
@@ -27,3 +27,29 @@ module.exports.create = function(req, res){
 
     });  
 }
+
+module.exports.destroy = function(req, res){
+    //check if comment exists
+    Comment.findById(req.params.id, function(err, comment){
+        if(err){
+            console.log(err);
+            return ;
+        }
+        if(comment){
+            if(comment.user == req.user.id){
+                let post_id = comment.post;
+                comment.remove();
+
+                Post.findByIdAndUpdate(post_id, {$pull : {comments : req.params.id}}, function(err, post){
+                    return res.redirect('back');
+                });
+            }
+            else{
+                return res.redirect('back');
+            }
+        }
+        else{
+            return res.redirect('back');
+        }
+    });
+};

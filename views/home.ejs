@@ -32,6 +32,9 @@
                                 <small>User : <%= comment.user.name%></small>
                                 <br>
                                 <%= comment.content%>
+                                <%if(locals.user && user.id == comment.user.id){%>
+                                    <a href ="/comment/destroy/<%=comment.id%>">Delete</a>
+                                <%}%>
                             </p>
                         <% } %>
                         <%}%>
