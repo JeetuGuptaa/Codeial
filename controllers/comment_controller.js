@@ -30,17 +30,18 @@ module.exports.create = function(req, res){
 
 module.exports.destroy = function(req, res){
     //check if comment exists
-    Comment.findById(req.params.id, function(err, comment){
+    console.log(req.query);
+    Comment.findById(req.query.id, function(err, comment){
         if(err){
             console.log(err);
             return ;
         }
         if(comment){
-            if(comment.user == req.user.id){
+            if(comment.user == req.user.id || req.query.author == req.user.id){
                 let post_id = comment.post;
                 comment.remove();
 
-                Post.findByIdAndUpdate(post_id, {$pull : {comments : req.params.id}}, function(err, post){
+                Post.findByIdAndUpdate(post_id, {$pull : {comments : req.query.id}}, function(err, post){
                     return res.redirect('back');
                 });
             }
