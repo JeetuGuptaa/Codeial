@@ -11,35 +11,8 @@
 
     <section id="postContainer">
         <ul>
-            <% for(let post of posts){ %>
-                <p id = 'singlePost'>
-                    <li>
-                        
-                        <small>User : <%= post.user.name %></small>
-                        <br>
-                        <%= post.content %>
-                        <%if(locals.user && user.id == post.user.id){%>
-                            <a href ="/post/destroy/<%=post.id%>">Delete</a>
-                        <%}%>
-                        <%if(locals.user){%>
-                        <form action="/comment/create" method="POST">
-                            <textarea placeholder="Type Here..." required cols="30" rows="3" name ="content"></textarea>
-                            <input type='hidden' name = 'post' value ='<%= post._id%>'>
-                            <button>Reply</button>
-                        </form>
-                        <% for(let comment of post.comments){ %> 
-                            <p>
-                                <small>User : <%= comment.user.name%></small>
-                                <br>
-                                <%= comment.content%>
-                                <%if(locals.user && ((user.id == comment.user.id) || (user.id == post.user.id))){%>
-                                    <a href ="/comment/destroy/?id=<%=comment.id%>&author=<%= post.user.id%>">Delete</a>
-                                <%}%>
-                            </p>
-                        <% } %>
-                        <%}%>
-                    </li>
-                </p>
+            <% for(post of posts){ %>
+                <%-include('./_post')-%>
             <%}%>
         </ul>
                 
