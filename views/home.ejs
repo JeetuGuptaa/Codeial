@@ -15,6 +15,18 @@
                 <%-include('./_post')-%>
             <%}%>
         </ul>
-                
+    </section>
+
+    <section id="Friends">
+        <h2>
+            Friends
+        </h2>
+        <ul>
+            <% for(u of allUsers){%>
+                <li>
+                    <a href = "/user/profile/<%=u.id%>"><%=u.name%></a>
+                </li>
+            <%}%>
+        </ul>
     </section>
 </section>

@@ -1,7 +1,12 @@
 const User = require('../models/user.js');
 
 module.exports.profile = function(req, res){
-    return res.render('userProfile');
+    User.findById(req.params.id, function(err, user){
+        return res.render('userProfile',{
+            thisUser : user
+        });
+    });
+    
 }
 
 module.exports.data = function(req, res){
@@ -56,7 +61,7 @@ module.exports.signin = function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
-    return res.redirect('/user/profile');
+    return res.redirect('/');
 }
 
 //signout
@@ -71,4 +76,16 @@ module.exports.signout = function(req, res){
         }
     });
     
+}
+
+module.exports.update = function(req, res){
+    if(req.params.id == req.user.id){
+        User.findByIdAndUpdate(req.user.id, req.body, function(err, user){
+            if(err) return;
+            return res.redirect('back');
+        })
+    }
+    else{
+        return res.status(401).send('Unauthorized');
+    }
 }

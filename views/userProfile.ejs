@@ -6,18 +6,21 @@
     </head>
     <body>
         <h1>User Profile</h1>
-        <form action="/user/data" method = "post">
-            <input type="text" name="name">
-            <button>Submit</button>
-        </form>
 
 <!-- since passport.setAutherizedUser middle ware has made user available in views we can directly access it -->
         <p>
-            <%= user.name%>
+            <%= thisUser.name%>
         </p>
         <p>
-            <%= user.email%>
+            <%= thisUser.email%>
         </p>
 
+        <%if(user.id == thisUser.id){%>
+            <form action ="/user/update/<%= thisUser.id%>" method = "POST">
+                <input type="text" name="name" required placeholder="Update Name">
+                <input type="email" name="email" required placeholder="Update email">
+                <button>Submit</button>
+            </form>
+        <%}%>
     </body>
 </html>
