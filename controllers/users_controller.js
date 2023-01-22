@@ -1,5 +1,6 @@
 const User = require('../models/user.js');
 
+// Async/await not needed as there is only one callback 
 module.exports.profile = function(req, res){
     User.findById(req.params.id, function(err, user){
         return res.render('userProfile',{
@@ -19,39 +20,25 @@ module.exports.signup = function(req, res){
 }
 
 //get the signUp data
-module.exports.create = function(req, res){
-    console.log(req.body);
-    //check if password and confirm password are same
-    if(req.body.password != req.body.confirmPassword){
-        return res.redirect('back');
-    }
-
-    //if the password and confirm password are same, check if the email is unique
-    User.findOne({email : req.body.email}, function(err, user){
-        if(err){
-            console.log("Error in finding in finding user in dataBase");
-            return;
+module.exports.create = async function(req, res){
+    try{
+        //check if password and confirm password are same
+        if(req.body.password != req.body.confirmPassword){
+            return res.redirect('back');
         }
-
+        //if the password and confirm password are same, check if the email is unique
+        let user = await User.findOne({email : req.body.email});
         //if user found then redirect back
         if(user){
             return res.redirect('back');
         }
-
         //otherwise create user
-        
-        User.create(req.body, function(err, user){
-        //in the above step we have passed whole data of form, that includes email, name, password, confirmPassword
-        //but we have defined email, name, password so confirm password isn't require
-        //mongoose will handle it and ignore confirmPassword
-            if(err){
-                console.log("Error in creating user", err);
-                return;
-            }
-            console.log("user created", user);
-            return res.redirect('/user/signin');
-        })
-    });
+        let newUser = await User.create(req.body);
+        return res.redirect('/user/signin');
+    }catch(err){
+        console.log(err);
+        return ;
+    }
 }
 
 //render signIn page
