@@ -3,6 +3,8 @@
         <title>
             Codeial
         </title>
+        <link rel="stylesheet" type="text/css" href="/css/noty.css">
+        <link rel="stylesheet" type="text/css" href="/css/sunset.css">
         <link rel="stylesheet" type="text/css" href="/css/signUp.css">
         <link rel="stylesheet" type="text/css" href="/css/home.css">
         <link rel="stylesheet" type="text/css" href="/css/header.css">
@@ -10,11 +12,39 @@
     </head>
     <body>
         <%- include('./_header')%>
+        <!-- Now that we are using noty to show notifications we don't  need it anymore -->
+        <!-- <% if(flash.success && flash.success.length>0){ %>
+            <h5><%= flash.success %></h5>
+        <% } %> -->
+
         <main>
             <%- body%>
         </main>
         <%- include('./_footer')%>
 
         <%- script %>
+        <script src = "/js/noty.min.js"></script>
+        <% if(flash.success && flash.success.length>0){ %>
+            <script>
+                new Noty({
+                    theme : "sunset",
+                    text: "<%=flash.success%>",
+                    type : "success",
+                    layout : "topRight",
+                    timeout : 1500
+                }).show();
+            </script>
+        <%}%>
+        <% if(flash.error && flash.error.length>0){ %>
+            <script>
+                new Noty({
+                    theme : "sunset",
+                    text: "<%=flash.error%>",
+                    type : "error",
+                    layout : "topRight",
+                    timeout : 1500
+                }).show();
+            </script>
+        <%}%>
     </body>
 </html>

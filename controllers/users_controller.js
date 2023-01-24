@@ -24,20 +24,23 @@ module.exports.create = async function(req, res){
     try{
         //check if password and confirm password are same
         if(req.body.password != req.body.confirmPassword){
+            req.flash('error', 'Password and Confirm Password must be same');
             return res.redirect('back');
         }
         //if the password and confirm password are same, check if the email is unique
         let user = await User.findOne({email : req.body.email});
         //if user found then redirect back
         if(user){
+            req.flash('error', 'User Already Exists');
             return res.redirect('back');
         }
         //otherwise create user
         let newUser = await User.create(req.body);
+        req.flash('success', 'Signed up successfully');
         return res.redirect('/user/signin');
     }catch(err){
-        console.log(err);
-        return ;
+        req.flash('error', err);
+        return res.redirect('back');
     }
 }
 
@@ -48,6 +51,7 @@ module.exports.signin = function(req, res){
 
 //sign in and create a session for the user
 module.exports.createSession = function(req, res){
+    req.flash('success', "You have successfully signed in");
     return res.redirect('/');
 }
 
@@ -55,10 +59,11 @@ module.exports.createSession = function(req, res){
 module.exports.signout = function(req, res){
     req.logout(function(err){
         if(err){
-            console.log("Error while logging out");
-            return ;
+            req.flash('error', err);
+            return res.redirect('back');
         }
         else{
+            req.flash('success', "Logged out!");
             res.redirect('/user/signin');
         }
     });
@@ -68,7 +73,11 @@ module.exports.signout = function(req, res){
 module.exports.update = function(req, res){
     if(req.params.id == req.user.id){
         User.findByIdAndUpdate(req.user.id, req.body, function(err, user){
-            if(err) return;
+            if(err){
+                req.flash('error', err);
+                return res.redirect('back');
+            };
+            req.flash('success', 'Profile Updated Successfully');
             return res.redirect('back');
         })
     }

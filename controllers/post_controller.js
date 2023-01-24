@@ -1,6 +1,5 @@
 const Post = require('../models/post');
 const comment = require('../models/commment');
-const { rawListeners } = require('../models/commment');
 
 //Although this function contains one callback only,async/await is not needed
 module.exports.create = async function(req, res){
@@ -9,10 +8,11 @@ module.exports.create = async function(req, res){
             content : req.body.content,
             user : req.user._id
         });
+        req.flash('success', 'Post published');
         return res.redirect('back');
     }
     catch(err){
-        console.log("Error in creating post", err);
+        req.flash('error', err);
         return;
     }
 };
@@ -26,13 +26,15 @@ module.exports.destroy = async function(req, res){
             post.remove();
             //deleting comments of post
             await comment.deleteMany({post : post.id});
+            req.flash('success', 'Post and respective comments Deleted');
             return res.redirect('back');
         }
         else{
+            req.flash('error', 'Invalid Request');
             return res.redirect('back');
         }
     }catch(err){
-        console.log("Error", err);
+        req.flash('error', err);
         return;
     }
 };

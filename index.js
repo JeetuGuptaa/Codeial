@@ -9,6 +9,8 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 //to permanently store our session on mongo
 const MongoStore = require('connect-mongo');
+const flash = require('connect-flash');
+const customMiddleware = require('./config/middleware');
 const port = 8000;
 
 
@@ -48,9 +50,11 @@ app.use(passport.session());
 //whenever any request comes in this middle ware is called and if the user is authenticated then 
 //the user is passed on to the locals, where it will be visible in the views
 app.use(passport.setAutherizedUser);
+app.use(flash());
+app.use(customMiddleware.setFlash);
+
 //use router 
 app.use('/', require('./routes'));
-
 
 app.listen(port, function(err){
     if(err){
