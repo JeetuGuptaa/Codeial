@@ -1,24 +1,27 @@
-<p>
-    <li>
+
+<li id ="<%= post.id %>">
+    <p>
         <small>User : <%= post.user.name %></small>
         <br>
         <%= post.content %>
         <%if(locals.user && user.id == post.user.id){%>
-            <a href ="/post/destroy/<%=post.id%>">Delete</a>
+            <a href ="/post/destroy/<%=post.id%>" class ="delete-post">Delete</a>
         <%}%>
-        <%if(locals.user){%>
-            <form action="/comment/create" method="POST">
-                <textarea placeholder="Type Here..." required cols="30" rows="3" name ="content"></textarea>
-                <input type='hidden' name = 'post' value ='<%= post._id%>'>
-                <button>Reply</button>
-            </form>
-            <ul>
-                <% for(comment of post.comments){ %> 
-                    <li>
-                        <%- include('./_comment')%>
-                    </li>
-                <% } %>
-            </ul>
-        <%}%>
-    </li>
-</p>
+    </p>
+    
+    <%if(locals.user){%>
+        <form action="/comment/create" method="POST" class="create-comment">
+            <textarea placeholder="Type Here..." cols="30" rows="3" name ="content" required></textarea>
+            <input type='hidden' name = 'post' value ='<%= post._id%>'>
+            <button type = 'submit'>Reply</button>
+        </form>
+        
+        <ul id="comment-container-<%= post._id %>">
+            <% for(comment of post.comments){ %> 
+
+                    <%- include('./_comment')%>
+                
+            <% } %>
+        </ul>
+    <%}%>
+</li>

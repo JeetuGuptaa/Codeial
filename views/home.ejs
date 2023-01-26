@@ -3,7 +3,7 @@
 <section id = "homeContainer">
     <section id="posts">
         <% if(locals.user){ %>
-        <form action ="/post/create" method ="POST">
+        <form action ="/post/create" method ="POST" id = "postForm">
             <textarea placeholder="Type Here..." required cols="30" rows="3" name ="content"></textarea>
             <input type="Submit" value = "Post">
         </form>
@@ -31,3 +31,4 @@
     </section>
 </section>
 
+<script src ="/js/script.js"></script>

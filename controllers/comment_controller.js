@@ -3,8 +3,10 @@ const Post = require('../models/post');
 
 module.exports.create = async function(req, res){
     try{
+        
         let post = await Post.findById(req.body.post);
         if(!post){
+            console.log('POST NO TFOUND');
             req.flash('error', 'Invalid Request');
             return res.redirect('back');
         }
@@ -19,6 +21,23 @@ module.exports.create = async function(req, res){
         post.comments.push(newComment); //mongoose feature
         //everytime we update we have to save it, save tells DB that it is the final version save it.
         post.save();
+        
+        let commentForAjax = await Comment.findById(newComment.id)
+        .populate('user')
+        .populate({
+            path : 'post',
+            populate : {
+                path : 'user'
+            }
+        })
+        if(req.xhr){
+            return res.status(200).json({
+                data:{
+                    comment : commentForAjax
+                },
+                message : "Comment Added Successfully"
+            });
+        }
         req.flash('success', 'Comment added successfully');
         return res.redirect('back'); 
     }catch(err){
@@ -36,6 +55,16 @@ module.exports.destroy = async function(req, res){
             comment.remove();
 
             let post = await Post.findByIdAndUpdate(post_id, {$pull : {comments : req.query.id}});
+
+            if(req.xhr){
+                return res.status(200).json({
+                    data :{
+                        comment_id : req.query.id
+                    },
+                    message : "Deleted"
+                });
+            }
+
             req.flash('success', 'Comment Deleted Successfully');
             return res.redirect('back');
         }

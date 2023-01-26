@@ -20,6 +20,7 @@ module.exports.home = async function(req, res){
         //populating the user
         //this means, that whole user document will be fetched with post
         let Usersposts = await post.find({})
+        .sort('-createdAt')
         .populate('user')
         .populate({
             path : 'comments',
