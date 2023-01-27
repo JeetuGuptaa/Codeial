@@ -1,4 +1,7 @@
+const { rawListeners } = require('../models/user.js');
 const User = require('../models/user.js');
+const fs = require('fs');
+const path = require('path');
 
 // Async/await not needed as there is only one callback 
 module.exports.profile = function(req, res){
@@ -70,16 +73,59 @@ module.exports.signout = function(req, res){
     
 }
 
-module.exports.update = function(req, res){
+module.exports.update = async function(req, res){
+    // if(req.params.id == req.user.id){
+    //     User.findByIdAndUpdate(req.user.id, req.body, function(err, user){
+    //         if(err){
+    //             req.flash('error', err);
+    //             return res.redirect('back');
+    //         };
+    //         req.flash('success', 'Profile Updated Successfully');
+    //         return res.redirect('back');
+    //     })
+    // }
+    // else{
+    //     return res.status(401).send('Unauthorized');
+    // }
+
     if(req.params.id == req.user.id){
-        User.findByIdAndUpdate(req.user.id, req.body, function(err, user){
-            if(err){
-                req.flash('error', err);
+        try{
+            let user = await User.findByIdAndUpdate(req.user.id);
+            //now there is a slight difference, since the form is a multipart form,
+            //our body parser will not be able to parse the form
+            //so we cannot read the form data with req.body
+
+            //but multer takes the req and does it for us, it 
+            //Multer adds a body object and a file or files object to the request object.
+            //The body object contains the values of the text fields of the form,
+            //the file or files object contains the files uploaded via the form.
+
+            User.uploadedAvatar(req, res, function(err){
+                if(err){console.log(err)}
+                //we would not be able to access req.body without this fxn, we have defined it in user model
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                //not everytie someone is going to upload a file
+                if(req.file){
+                    if(user.avatar  && fs.existsSync(path.join(__dirname, '..', user.avatar))){//checking if user already has an avatar then deleteing it
+                        //for deleting a file we need fs module
+                        //and since we need path of file we will use path module
+                        fs.unlinkSync(path.join(__dirname, '..', user.avatar)); //user avatar contains the file path w.r.t projext folder
+                    }
+                    //this is saving the avatar path in the avatar field in the user
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                }
+
+                user.save();
                 return res.redirect('back');
-            };
-            req.flash('success', 'Profile Updated Successfully');
-            return res.redirect('back');
-        })
+            })
+
+
+        }catch(err){
+            req.flash('error', err);
+            res.redirect('back');
+        }
     }
     else{
         return res.status(401).send('Unauthorized');

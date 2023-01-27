@@ -8,6 +8,8 @@
         <h1>User Profile</h1>
 
 <!-- since passport.setAutherizedUser middle ware has made user available in views we can directly access it -->
+
+        <img src="<%=thisUser.avatar%>" alt = "<%= thisUser.name%>" width ="100px" height="100px">
         <p>
             <%= thisUser.name%>
         </p>
@@ -16,9 +18,10 @@
         </p>
 
         <%if(user.id == thisUser.id){%>
-            <form action ="/user/update/<%= thisUser.id%>" method = "POST">
-                <input type="text" name="name" required placeholder="Update Name">
-                <input type="email" name="email" required placeholder="Update email">
+            <form action ="/user/update/<%= thisUser.id%>" method = "POST" enctype="multipart/form-data">
+                <input type="text" name="name" required value = "<%= thisUser.name%>">
+                <input type="email" name="email" required value = "<%= thisUser.email%>">
+                <input type ="file" name="avatar" placeholder="Upload Image">
                 <button>Submit</button>
             </form>
         <%}%>

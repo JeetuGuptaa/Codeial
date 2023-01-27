@@ -19,6 +19,7 @@ app.use(cookieParser());
 
 app.use(expressLayouts);
 app.use(express.static('./assets'));
+app.use('/uploads', express.static('./uploads'));//this tells server for req coming with /uploads make uploads folder availabe to them
 // extract style and scripts from sub pages into the layout
 app.set('layout extractStyles', true);
 app.set('layout extractScripts', true);
