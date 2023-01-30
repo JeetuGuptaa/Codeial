@@ -18,4 +18,10 @@ router.post('/create-session', passport.authenticate(
     {failureRedirect:"/user/signin"}
 ), usersController.createSession);
 
+router.get('/auth/google', passport.authenticate('google', {'scope': ['profile', 'email']}));//this url is given by passport
+router.get('/auth/google/callback', passport.authenticate('google',//our callback uri
+{
+    failureRedirect: "/user/signin"
+}), usersController.createSession);
+
 module.exports = router;
