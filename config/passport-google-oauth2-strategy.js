@@ -4,8 +4,8 @@ const crypto = require('crypto'); //since in our DB password is required, but in
 const User = require('../models/user');
 
 passport.use(new googleStrategy({
-        clientID : "235673864283-sqktfe9lq1g857cp8queb2noukaadvbv.apps.googleusercontent.com",//changed now
-        clientSecret : "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",//changed now
+        clientID : //YOUR_CLIENTID_HERE
+        clientSecret : //YOUR_SECRET_ID_HERE
         callbackURL : "http://localhost:8000/user/auth/google/callback"
 },
     function(accessToken, refreshToken, profile, done){//accessToken is provided by googleto access the user info
