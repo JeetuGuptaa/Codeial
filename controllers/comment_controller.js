@@ -1,6 +1,8 @@
 const Comment = require('../models/commment');
 const Post = require('../models/post');
-
+const comments_mailer = require('../mailers/comments_mailer');
+const commentEmailWorker = require('../kue_worker/comment_email_worker');
+const queue = require('../config/kue');
 module.exports.create = async function(req, res){
     try{
         
@@ -23,13 +25,25 @@ module.exports.create = async function(req, res){
         post.save();
         
         let commentForAjax = await Comment.findById(newComment.id)
-        .populate('user')
+        .populate('user','-password')
         .populate({
             path : 'post',
             populate : {
-                path : 'user'
+                path : 'user',
+                select : '-password'
             }
+        });
+
+        // comments_mailer.newComment(commentForAjax);
+        let job = queue.create('emails',commentForAjax).save(function(err){
+            if(err){
+                console.log(err);
+                return;
+            }
+
+            console.log('Job enqueued', job.id);
         })
+        
         if(req.xhr){
             return res.status(200).json({
                 data:{
