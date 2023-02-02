@@ -53,6 +53,14 @@ passport.checkAuthentication = function(req, res, next){
         next();
     }
     else{
+        if(req.xhr){
+            return res.status(200).json({
+                data : {
+                    redirect : '/user/signin'
+                },
+                message : 'User not signedIn',
+            });
+        }
         return res.redirect('/user/signin');
     }
     

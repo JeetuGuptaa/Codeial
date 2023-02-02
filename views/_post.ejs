@@ -4,9 +4,12 @@
         <small>User : <%= post.user.name %></small>
         <br>
         <%= post.content %>
+        <br>
         <%if(locals.user && user.id == post.user.id){%>
             <a href ="/post/destroy/<%=post.id%>" class ="delete-post">Delete</a>
         <%}%>
+        <a href ="/like/toggleLike/?id=<%=post.id%>&type=Post" class ="like">Like</a>
+        <small id = 'like-<%=post._id%>'><%= post.likes.length%></small>
     </p>
     
     <%if(locals.user){%>

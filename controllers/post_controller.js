@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 const comment = require('../models/commment');
-
+const Like = require('../models/Like');
 //Although this function contains one callback only,async/await is not needed
 module.exports.create = async function(req, res){
     try{
@@ -38,9 +38,26 @@ module.exports.destroy = async function(req, res){
         // .id gives the id in string 
         // while comparing the ids we need to convert them inito strings
         if(post.user == req.user.id){
-            post.remove();
-            //deleting comments of post
+            
+            //deleting likes of each comment of post
+            for(commentId of post.comments){
+                await Like.deleteMany({
+                    likeOn : commentId,
+                    onModel : 'Comment'
+                });
+            }
+
+            //deleting all comments associated with this post
             await comment.deleteMany({post : post.id});
+
+            //deleting all likes associated with this post
+            await Like.deleteMany({
+                likeOn : post._id,
+                onModel : 'Post'
+            });
+
+            //deleting post
+            post.remove();
             if(req.xhr){
                 return res.status(200).json({
                     data : {
