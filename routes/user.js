@@ -6,7 +6,7 @@ const router = express.Router();
 //passport.checkAuthentication middleware will check f teh user is signedin or not,
 //if not then it won't allow user to access profile page and redirect to sign in page
 router.get('/profile/:id',passport.checkAuthentication, usersController.profile);
-router.post('/data', usersController.data);
+router.get('/data', usersController.data);
 router.get('/signup',passport.checkIfSignedIn, usersController.signup);
 router.get('/signin',passport.checkIfSignedIn, usersController.signin);
 router.post('/create', usersController.create);
@@ -24,4 +24,8 @@ router.get('/auth/google/callback', passport.authenticate('google',//our callbac
     failureRedirect: "/user/signin"
 }), usersController.createSession);
 
+router.get('/reset-password', usersController.forgetPassword);
+router.post('/reset-password', usersController.passwordMail);
+router.get('/change-password/:accessToken', usersController.changePassword);
+router.post('/update-password/:accessToken', usersController.updatePassword);
 module.exports = router;

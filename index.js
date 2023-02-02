@@ -15,8 +15,7 @@ const flash = require('connect-flash');
 const customMiddleware = require('./config/middleware');
 const port = 8000;
 
-
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
 
 app.use(expressLayouts);

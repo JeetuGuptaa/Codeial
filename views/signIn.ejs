@@ -3,8 +3,10 @@
 		<form action = "/user/create-session" method = "POST" id ="auth-form">
 			<input type="email" name="email" placeholder ="E-mail" required>
 			<input type="password" name ="password" placeholder= "Password" required>
+			<a href="/user/reset-password"><small>forget-password</small></a>
 			<button type ="submit" id ="auth-btn">Sign In</button>
 		</form>
+		
 		<p>
 			<a href ="/user/auth/google">GOOGLE SignIn/SignUp</a>
 		</p>
