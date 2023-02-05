@@ -28,14 +28,33 @@ module.exports.home = async function(req, res){
                 path : 'user'
             }
         });
-        
+        // user
         let all_users = await User.find({});
         
+        //user's Friends
+        let userFriends;
+        if(req.user){
+            userFriends = await User.findById(req.user._id)
+            .select('-password')
+            .populate({
+                path : 'friendships',
+                populate : {
+                    path : 'from_user to_user',
+                    select : '-password'
+                },
+                
+            });
+        }
+        
+        console.log(userFriends);
         return res.render('home', {
             title : "Home",
             posts : Usersposts,
-            allUsers : all_users
+            allUsers : all_users,
+            userFriends : userFriends
         });
+
+        
     }
     catch(err){
         console.log(err);

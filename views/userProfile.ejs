@@ -24,6 +24,12 @@
                 <input type ="file" name="avatar" placeholder="Upload Image">
                 <button>Submit</button>
             </form>
+        <% }else if(locals.isFriend){ %>
+            <a href = "/user/friend/toggelFriend/?to_user=<%= thisUser._id %>" id="toggleFriend">Remove Friend</a>
+        <%}else{%>
+            <a href = "/user/friend/toggelFriend/?to_user=<%= thisUser._id %>" id="toggleFriend">Add Friend</a>
         <%}%>
+
+        <script src ="/js/friends.js"></script>
     </body>
 </html>

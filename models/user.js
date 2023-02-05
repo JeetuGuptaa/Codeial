@@ -27,7 +27,13 @@ const userSchema = mongoose.Schema({
     },
     validTime : {
         type : Number
-    }
+    },
+    friendships : [
+        {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Friendship'
+        }
+    ]
 },
 {
     timestamps : true //this will tell mongoose to create time stamps, of created at and updated at

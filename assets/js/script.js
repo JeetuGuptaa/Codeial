@@ -44,7 +44,7 @@
                 <br>
                 ${post.content}
                 <a href ="/post/destroy/${post._id}" class ="delete-post">Delete</a>
-                <a href ="/like/toggleLike/?id=${post._id}&type=Post" class ="like">Like</a>
+                <a href ="/user/like/toggleLike/?id=${post._id}&type=Post" class ="like">Like</a>
                 <small id = 'like-${post._id}'>${post.likes.length}</small>
             </p>
             
@@ -118,7 +118,7 @@
         <br>
         ${comment.content}
         <a href ="/comment/destroy/?id=${comment._id}&author=${comment.post.user._id}" class ="delete-comment">Delete</a>
-        <a href ="/like/toggleLike/?id=${comment._id}&type=Comment" class ="like">Like</a>
+        <a href ="/user/like/toggleLike/?id=${comment._id}&type=Comment" class ="like">Like</a>
         <small id = 'like-${comment._id}'>${comment.likes.length}</small>
     </li>`)
     }
@@ -186,10 +186,9 @@
         })
     }
     let likes = $('.like');
-        console.log(likes);
-        for(let i=0;i<likes.length;i++){
-            createlike(likes.eq(i));
-        }
+    console.log(likes);
+    for(let i=0;i<likes.length;i++){
+        createlike(likes.eq(i));
+    }
 }
-
 

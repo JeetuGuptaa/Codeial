@@ -12,6 +12,8 @@ router.get('/signin',passport.checkIfSignedIn, usersController.signin);
 router.post('/create', usersController.create);
 router.get('/signout', usersController.signout);
 router.post('/update/:id', passport.checkAuthentication, usersController.update);
+router.use('/like', require('./like'));
+router.use('/friend', require('./friendship'));
 
 router.post('/create-session', passport.authenticate(
     'local', //we are using local strategy

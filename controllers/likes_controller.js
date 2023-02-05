@@ -24,7 +24,6 @@ module.exports.toggleLike = async function(req, res){
             onModel : req.query.type
         });
 
-        console.log(existingLike);
         if(existingLike){
             //pull it out from post/comment and delete it
             likeOn.likes.pull(existingLike._id);

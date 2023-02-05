@@ -17,18 +17,41 @@
             </ul>
         </section>
     </section>
-    <section id="Friends">
-        <h2>
-            Friends
-        </h2>
-        <ul>
-            <% for(u of allUsers){%>
-                <li>
-                    <a href = "/user/profile/<%=u.id%>"><%=u.name%></a>
-                </li>
-            <%}%>
-        </ul>
+    <section id="otherHalf">
+        <div id = "Friends">
+            <h2>
+                Friends
+            </h2>
+            <% if(locals.user){ %>
+                <ul>
+                    <% for(friend of userFriends.friendships){%>
+                        <li id = "friend-<%= friend._id %>">
+                            <%if(friend.from_user.id == locals.user.id){%>
+                                <%= friend.to_user.name%>
+                            <%}else{%>
+                                <%= friend.from_user.name%>
+                            <%}%>
+                            <a href = "/user/friend/remove/?friendId=<%= friend._id %>" class = "remove-friend">Remove</a>
+                        </li>
+                    <%}%>
+                </ul>
+            <% } %>
+            
+        </div>
+        <div id = "Users">
+            <h2>
+                Users
+            </h2>
+            <ul>
+                <% for(u of allUsers){%>
+                    <li>
+                        <a href = "/user/profile/<%=u.id%>"><%=u.name%></a>
+                    </li>
+                <%}%>
+            </ul>
+        </div>
     </section>
 </section>
 
 <script src ="/js/script.js"></script>
+<script src ="/js/friends.js"></script>

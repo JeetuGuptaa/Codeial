@@ -5,6 +5,6 @@
     <%if(locals.user && ((user.id == comment.user.id) || (user.id == post.user.id))){%>
         <a href ="/comment/destroy/?id=<%=comment.id%>&author=<%= post.user.id%>" class ="delete-comment">Delete</a>
     <%}%>
-    <a href ="/like/toggleLike/?id=<%=comment.id%>&type=Comment" class ="like">Like</a>
+    <a href ="/user/like/toggleLike/?id=<%=comment.id%>&type=Comment" class ="like">Like</a>
     <small id = 'like-<%=comment._id%>'><%= comment.likes.length%></small>
 </li>

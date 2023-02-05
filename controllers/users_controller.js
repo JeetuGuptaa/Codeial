@@ -4,14 +4,39 @@ const path = require('path');
 const resetMail = require('../mailers/password-reset-mailer');
 const crypto = require('crypto');
 const { model } = require('mongoose');
+const Friendship = require('../models/Friendship');
 // Async/await not needed as there is only one callback 
-module.exports.profile = function(req, res){
-    User.findById(req.params.id, function(err, user){
-        return res.render('userProfile',{
-            thisUser : user
+module.exports.profile = async function(req, res){
+    try{
+        let user = await User.findById(req.params.id).select('-password');
+        let friends = await Friendship.findOne({$or :
+            [
+                {
+                    to_user : req.user._id,
+                    from_user : req.params.id
+                },
+                {
+                    from_user : req.user._id,
+                    to_user : req.params.id
+                }
+            ]
         });
-    });
-    
+
+        if(friends){
+            return res.render('userProfile', {
+                thisUser : user,
+                isFriend : true
+            });
+        }else{
+            return res.render('userProfile', {
+                thisUser : user,
+                isFriend : false
+            });
+        }
+    }catch(err){
+        console.log(err);
+        return;
+    }
 }
 
 module.exports.data =async  function(req, res){
