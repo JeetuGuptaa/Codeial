@@ -1,0 +1,17 @@
+{
+  "css/chat.css": "css/chat-7bec70af47.css",
+  "css/header.css": "css/header-3ce29697a1.css",
+  "css/home.css": "css/home-d3596cf7f4.css",
+  "css/noty.css": "css/noty-03a9871467.css",
+  "css/signUp.css": "css/signUp-0fe7fdce25.css",
+  "css/sunset.css": "css/sunset-226b6dc28a.css",
+  "images/background1.jpg": "images/background1-2086f438dd.jpg",
+  "images/background2.jpg": "images/background2-6d193022a6.jpg",
+  "images/background3.jpg": "images/background3-71ce1adb8b.jpg",
+  "js/chat_engine.js": "js/chat_engine-fbfe9bb67f.js",
+  "js/friends.js": "js/friends-e654ec84cd.js",
+  "js/jquery-3.6.3.js": "js/jquery-3-8c4c27f984.6.3.js",
+  "js/noty.min.js": "js/noty-2250292e32.min.js",
+  "js/script.js": "js/script-3f7afe4e92.js",
+  "js/socket.io.js": "js/socket-cf72e6e159.io.js"
+}

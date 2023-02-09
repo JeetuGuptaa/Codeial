@@ -1,5 +1,6 @@
 const post = require('../models/post');
 const User = require('../models/user');
+const HomeChat = require('../models/homeChat');
 
 //Previous code was having many callbacks, first it was fetching all the posts
 //then in the callback it was fetching all the users
@@ -45,13 +46,16 @@ module.exports.home = async function(req, res){
                 
             });
         }
-        
-        console.log(userFriends);
+    
+        let homeChat = await HomeChat.find({})
+        .sort('createdAt')
+        .populate('user', '-password');
         return res.render('home', {
             title : "Home",
             posts : Usersposts,
             allUsers : all_users,
-            userFriends : userFriends
+            userFriends : userFriends,
+            homeChat : homeChat
         });
 
         

@@ -1,5 +1,8 @@
 const express = require('express');
+const env = require('./config/environment');
+const logger = require('morgan');//will be used to save production logs into a file
 const app = express();
+require('./config/view_helper')(app);
 const cookieParser = require('cookie-parser');
 const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose.js');
@@ -9,17 +12,26 @@ const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
 const passportJWT = require('./config/passport-jwt-strategy');
 const passportGoogle = require('./config/passport-google-oauth2-strategy');
+const path = require('path')
 //to permanently store our session on mongo
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const customMiddleware = require('./config/middleware');
 const port = 8000;
 
+//chat engine setup for socket.io
+const chatServer = require('http').Server(app);
+const chatSocket = require('./config/chat_socket').chatSocket(chatServer);
+chatServer.listen(5000);
+console.log("Chat server listening on port 5000");
+
+
 app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
 
 app.use(expressLayouts);
-app.use(express.static('./assets'));
+app.use(express.static(path.join(__dirname, env.asset_path)));
+app.use(logger(env.morgan.mode, env.morgan.options))
 app.use('/uploads', express.static('./uploads'));//this tells server for req coming with /uploads make uploads folder availabe to them
 // extract style and scripts from sub pages into the layout
 app.set('layout extractStyles', true);
@@ -32,7 +44,7 @@ app.set('views', './views');
 //for session cookie
 app.use(session({
     name : 'codeial', 
-    secret : "blahsomething", // encryption ket that will be used to encrypt the cookie
+    secret : env.session_cookie_key, // encryption ket that will be used to encrypt the cookie
     saveUninitialized : false,
     resave : false,
     cookie : {

@@ -2,11 +2,12 @@ const passport = require('passport');
 const googleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const crypto = require('crypto'); //since in our DB password is required, but in google oauth password won't be there so we will generate a random password using crypto
 const User = require('../models/user');
+const env = require('./environment');
 
 passport.use(new googleStrategy({
-        clientID : "235673864283-02m3iu64jabb8u79550lqrtssont0thh.apps.googleusercontent.com",
-        clientSecret : "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",
-        callbackURL : "http://localhost:8000/user/auth/google/callback"
+        clientID : env.Google_client_ID,
+        clientSecret : env.Google_client_Secret,
+        callbackURL : env.Google_callback_url
 },
     function(accessToken, refreshToken, profile, done){//accessToken is provided by googleto access the user info
         //refresh token,is used to create a fresh accessToken when accessToken expires

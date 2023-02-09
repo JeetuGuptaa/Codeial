@@ -9,6 +9,8 @@ const FriendsSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
     }
+},{
+    timestamps : true
 });
 
 const Friendship = mongoose.model('Friendship', FriendsSchema);

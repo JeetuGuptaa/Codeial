@@ -3,12 +3,18 @@
         <title>
             Codeial
         </title>
-        <link rel="stylesheet" type="text/css" href="/css/noty.css">
-        <link rel="stylesheet" type="text/css" href="/css/sunset.css">
-        <link rel="stylesheet" type="text/css" href="/css/signUp.css">
-        <link rel="stylesheet" type="text/css" href="/css/home.css">
-        <link rel="stylesheet" type="text/css" href="/css/header.css">
-        <script src ="/js/jquery-3.6.3.js"></script>
+        <link rel="stylesheet" type="text/css" href="<%= assetPath('css/noty.css') %>">
+        <link rel="stylesheet" type="text/css" href="<%= assetPath('css/sunset.css') %>">
+        <link rel="stylesheet" type="text/css" href="<%= assetPath('css/signUp.css') %>">
+        <link rel="stylesheet" type="text/css" href="<%= assetPath('css/home.css') %>">
+        <link rel="stylesheet" type="text/css" href="<%= assetPath('css/chat.css') %>">
+        <link rel="stylesheet" type="text/css" href="<%= assetPath('css/header.css') %>">
+        <style>
+            #chat{
+                background-image: url("<%= assetPath('images/background2.jpg')%>");
+            }
+        </style>
+        <script src ="<%= assetPath('js/jquery-3.6.3.js') %>"></script>
         <%- style %>
     </head>
     <body>
@@ -24,7 +30,7 @@
         <%- include('./_footer')%>
 
         <%- script %>
-        <script src = "/js/noty.min.js"></script>
+        <script src = "<%= assetPath('js/noty.min.js') %>"></script>
         <% if(flash.success && flash.success.length>0){ %>
             <script>
                 new Noty({

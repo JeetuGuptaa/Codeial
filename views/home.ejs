@@ -51,7 +51,27 @@
             </ul>
         </div>
     </section>
+    <% if(locals.user){ %>
+        <%- include('./chat.ejs')%>
+    <% } %>
+    
 </section>
 
-<script src ="/js/script.js"></script>
-<script src ="/js/friends.js"></script>
+
+<script src ="<%= assetPath('js/script.js') %>"></script>
+<script src ="<%= assetPath('js/friends.js') %>"></script>
+
+<script src="<%= assetPath('js/socket.io.js') %>"></script>
+<script src = "<%= assetPath('js/chat_engine.js') %>"></script>
+<% if(locals.user){ %>
+    <script>
+        {
+            //to scroll down for existing messages
+            let messageContainer = document.getElementById("messages");
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+        
+        // this class is implemented in chat_engine.js
+        new chatEngine('messages', "<%= locals.user.email %>", "<%= locals.user.name%>")
+    </script>
+<% } %>

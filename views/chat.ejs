@@ -1,10 +1,23 @@
 <section id = "chat">
-    <div id = "otherUser">
+    <div id = "messages">
+        <% for(messageContainer of homeChat){ %>
+            <br>
+            <div <% if(locals.user.email == messageContainer.user.email){ %>
+                    class = "messageContent selfMessage">
+                 <% }else{ %>
+                    class = "messageContent otherMessage">
+                    <small class = "messageUser">
+                        <%= messageContainer.user.name %>
+                    </small>
+                 <% } %>
+                 <p class = "messageStyle">
+                    <%= messageContainer.content %>
+                 </p>
+            </div>
+        <% } %>
     </div>
-    <div id = "thisUser">
-    </div>
-    <form>
-        <input type = "text" name = "message">
-        <button>Send</button>
+    <form id = "chat-form">
+        <input type = "text" name = "message" id = "message-input">
+        <button id = "message-send">Send</button>
     </form>
 </section>
